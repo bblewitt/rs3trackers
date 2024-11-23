@@ -14,7 +14,30 @@ class QuestCapeTracker(tk.Frame):
         # Define the quests data (years and their respective quests)
         self.quests = {
             "2001": ["Cook's Assistant", "Demon Slayer", "The Restless Ghost", "Sheep Shearer", "Shield of Arrav", "Ernest the Chicken", "Vampire Slayer", "Imp Catcher", "Stolen Hearts", "Diamond in the Rough", "What's Mine is Yours", "Witch's Potion", "The Knight's Sword", "Goblin Diplomacy", "Pirate's Treasure", "Dragon Slayer"],
-            "2002": ["Quest 3", "Quest 4"]
+            "2002": ["Quest 3", "Quest 4"],
+            "2003": ["Quest 3", "Quest 4"],
+            "2004": ["Quest 3", "Quest 4"],
+            "2005": ["Quest 3", "Quest 4"],
+            "2006": ["Quest 3", "Quest 4"],
+            "2007": ["Quest 3", "Quest 4"],
+            "2008": ["Quest 3", "Quest 4"],
+            "2009": ["Quest 3", "Quest 4"],
+            "2010": ["Quest 3", "Quest 4"],
+            "2011": ["Quest 3", "Quest 4"],
+            "2012": ["Quest 3", "Quest 4"],
+            "2013": ["Quest 3", "Quest 4"],
+            "2014": ["Quest 3", "Quest 4"],
+            "2015": ["Quest 3", "Quest 4"],
+            "2016": ["Quest 3", "Quest 4"],
+            "2017": ["Quest 3", "Quest 4"],
+            "2018": ["Quest 3", "Quest 4"],
+            "2019": ["Quest 3", "Quest 4"],
+            "2020": ["Quest 3", "Quest 4"],
+            "2021": ["Quest 3", "Quest 4"],
+            "2022": ["Quest 3", "Quest 4"],
+            "2023": ["Quest 3", "Quest 4"],
+            "2024": ["Quest 3", "Quest 4"],
+            "2025": ["N/A"]
         }
 
         # Main canvas for the entire page
@@ -26,9 +49,23 @@ class QuestCapeTracker(tk.Frame):
         self.skill_canvas = tk.Canvas(self, width=250, height=450, highlightthickness=1, bg="#1E1E1E")
         self.skill_canvas.place(x=20, y=125)
 
-        # Quest list frame on the right side
+        # Quest list frame with a scrollbar
         self.quest_frame = tk.Frame(self, width=250, height=450, bg="#1E1E1E")
-        self.quest_frame.place(x=370, y=125)
+        self.quest_frame.place(x=350, y=125)
+
+        # Create a canvas for the quest frame
+        self.quest_canvas = tk.Canvas(self.quest_frame, width=250, height=450, bg="#0B1F29", borderwidth=0, highlightthickness=0)
+        self.quest_scrollbar = ttk.Scrollbar(self.quest_frame, orient="vertical", command=self.quest_canvas.yview)
+        self.quest_scrollable_frame = tk.Frame(self.quest_canvas, bg="#1E1E1E")
+
+        # Configure the scrollable frame
+        self.quest_scrollable_frame.bind("<Configure>", lambda e: self.quest_canvas.configure(scrollregion=self.quest_canvas.bbox("all")))
+        self.quest_canvas.create_window((0, 0), window=self.quest_scrollable_frame, anchor="nw")
+        self.quest_canvas.configure(yscrollcommand=self.quest_scrollbar.set)
+
+        # Pack the canvas and scrollbar
+        self.quest_canvas.pack(side="right", fill="y")
+        self.quest_scrollbar.pack(side="right", fill="y")
 
         # File to store quest states
         self.quests_file = "Mem/quests.json"
@@ -201,16 +238,16 @@ class QuestCapeTracker(tk.Frame):
         self.controller.destroy()  # Close the app
 
     def create_quest_list(self):
-        """Create a togglable quest list."""
+        """Create a togglable quest list with a fixed size and scroll bar."""
         # Clear previous widgets
-        for widget in self.quest_frame.winfo_children():
+        for widget in self.quest_scrollable_frame.winfo_children():
             widget.destroy()
 
         # Add quests for each year
         row = 0
         for year, quests in self.quests.items():
-            year_label = tk.Label(self.quest_frame, text=f"Year {year}", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="white")
-            year_label.grid(row=row, column=0, sticky="w", padx=10, pady=5)
+            year_label = tk.Label(self.quest_scrollable_frame, text=f"{year}", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="white")
+            year_label.grid(row=row, column=0, sticky="w", padx=5, pady=1)
             row += 1
 
             for quest_name in quests:
@@ -221,7 +258,7 @@ class QuestCapeTracker(tk.Frame):
                     self.quest_states[year][quest] = var.get()
 
                 checkbox = tk.Checkbutton(
-                    self.quest_frame,
+                    self.quest_scrollable_frame,
                     text=quest_name,
                     variable=var,
                     onvalue=True,
@@ -232,5 +269,5 @@ class QuestCapeTracker(tk.Frame):
                     selectcolor="#1E1E1E",
                     anchor="w"
                 )
-                checkbox.grid(row=row, column=0, sticky="w", padx=20, pady=2)
+                checkbox.grid(row=row, column=0, sticky="w", padx=10, pady=1)
                 row += 1
