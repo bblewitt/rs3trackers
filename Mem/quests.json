@@ -1,0 +1,24 @@
+{
+    "2001": {
+        "Cook's Assistant": true,
+        "Demon Slayer": true,
+        "The Restless Ghost": true,
+        "Sheep Shearer": true,
+        "Shield of Arrav": true,
+        "Ernest the Chicken": true,
+        "Vampire Slayer": true,
+        "Imp Catcher": true,
+        "Stolen Hearts": true,
+        "Diamond in the Rough": true,
+        "What's Mine is Yours": true,
+        "Witch's Potion": true,
+        "The Knight's Sword": true,
+        "Goblin Diplomacy": true,
+        "Pirate's Treasure": true,
+        "Dragon Slayer": true
+    },
+    "2002": {
+        "quest 3": false,
+        "quest 4": false
+    }
+}
